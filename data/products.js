@@ -448,10 +448,10 @@ const products = [
     image: "images/products/men-navigator-sunglasses-brown.jpg",
     name: "Men's Navigator Sunglasses Pilot",
     rating: {
-      stars: 3.5,
-      count: 42
+      stars: 5,
+      count: 1986 
     },
-    priceCents: 1690,
+    priceCents: 1400,
     keywords: [
       "sunglasses",
       "glasses",
@@ -655,6 +655,38 @@ const products = [
       "hoodies",
       "apparel",
       "mens"
+    ]
+  },
+  {
+    id: "id1",
+    image: "images/products/umbrella.jpg",
+    name: "Portable Umbrella (Dark Green)",
+    rating: {
+      stars: 3,
+      count: 343
+    },
+    priceCents: 1170,
+    keywords: [
+      "umbrella",
+      "portable",
+      "light",
+      "waterproof"
+    ]
+  },
+  {
+    id: "id2",
+    image: "images/products/backpack.jpg",
+    name: "",
+    rating: {
+      stars: 5,
+      count: 1
+    },
+    priceCents: 50000,
+    keywords: [
+      "backpack",
+      "20L",
+      "travel",
+      "pockets"
     ]
   }
 ];
