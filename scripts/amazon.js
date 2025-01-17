@@ -90,5 +90,9 @@ document.querySelectorAll(".js-add-to-cart").forEach((button) => {
     document.querySelector(".js-cart-quantity").innerHTML = cartQuantity;
 
     document.querySelector(`.js-added-${productId}`).style.opacity = 1;
+
+    addedOpacity = 1
+    setTimeout(() => {
+      document.querySelector(`.js-added-${productId}`).style.opacity = 0}, 2000);
   });
 })
