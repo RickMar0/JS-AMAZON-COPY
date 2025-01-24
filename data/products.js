@@ -678,15 +678,31 @@ const products = [
     image: "images/products/backpack.jpg",
     name: "Premium Black Backpack - 20L - Lightweight",
     rating: {
-      stars: 5,
-      count: 1
+      stars: 2.5,
+      count: 120
     },
-    priceCents: 50000,
+    priceCents: 5000,
     keywords: [
       "backpack",
       "20L",
       "travel",
       "pockets"
+    ]
+  },
+  {
+    id: "id14",
+    image: "images/products/Grumman-F14B-Tomcat.jpg",
+    name: "Fully Operational Grumman F-14B Tomcat Fighter Jet with Phoenix Missiles and Bombs, servicing included",
+    rating: {
+      stars: 5,
+      count: 2
+    },
+    priceCents: 9000000000,
+    keywords: [
+      "fighter",
+      "jet",
+      "navy",
+      "missiles"
     ]
   }
 ];
