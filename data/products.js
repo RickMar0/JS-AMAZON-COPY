@@ -692,7 +692,7 @@ export const products = [
   {
     id: "id14",
     image: "images/products/Grumman-F14B-Tomcat.jpg",
-    name: "Fully Operational Grumman F-14B Tomcat Fighter Jet with Phoenix Missiles and Bombs, servicing included",
+    name: "Grumman F-14B Tomcat Fighter Jet with Phoenix Missiles and Bombs, servicing included",
     rating: {
       stars: 5,
       count: 2
@@ -703,6 +703,22 @@ export const products = [
       "jet",
       "navy",
       "missiles"
+    ]
+  },
+  {
+    id: "idGoose",
+    image: "images/products/goose.jpg",
+    name: "Radar Intercept Officer (RIO) and Navigation Assistant",
+    rating: {
+      stars: 5,
+      count: 1
+    },
+    priceCents: 900000,
+    keywords: [
+      "copilot",
+      "navigation",
+      "aircraft",
+      "RIO"
     ]
   }
 ];
