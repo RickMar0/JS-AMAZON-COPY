@@ -1,5 +1,5 @@
 
-import {cart} from '../data/cart.js';
+import {cart, addToCart} from '../data/cart.js';
 import {products} from '../data/products.js';
 
 let productsHTML = '';
@@ -65,10 +65,37 @@ products.forEach((product) => {
   `;
 });
 
+
 document.querySelector(".js-products-grid").innerHTML = productsHTML;
 
-let timeoutID;
 const timeouts = {};
+
+function updateCartQuantity () {
+  let cartQuantity = 0;
+
+  cart.forEach((item) => {
+    cartQuantity += item.quantity;
+  });
+
+  document.querySelector(".js-cart-quantity").innerHTML = cartQuantity;
+};
+
+function updateOpacity(productId) {
+  let addedOpacity = document.querySelector(`.js-added-${productId}`);
+
+  if (timeouts[productId]) {
+    clearTimeout(timeouts[productId]);
+  }
+
+  addedOpacity.classList.add("active");
+  addedOpacity.style.opacity = 1;
+
+  timeouts[productId] = setTimeout(() => {
+    addedOpacity.style.opacity = 0;
+    addedOpacity.classList.remove("active");
+    delete timeouts[productId];
+  }, 2000);
+};
 
 document.querySelectorAll(".js-add-to-cart").forEach((button) => {
   button.addEventListener("click", () => {
@@ -76,44 +103,8 @@ document.querySelectorAll(".js-add-to-cart").forEach((button) => {
     const { productId } = button.dataset;
     const selector = document.querySelector(`.js-quantity-selector-${productId}`);
 
-    let matchingItem;
-
-    cart.forEach((item) => {
-      if (productId === item.productId) {
-        matchingItem = item;
-      }
-    });
-
-    if (matchingItem) {
-      matchingItem.quantity += parseInt(selector.value, 10);
-    } else {
-      cart.push({
-        productId,
-        quantity: parseInt(selector.value, 10)
-      });
-    }
-
-    let cartQuantity = 0;
-
-    cart.forEach((item) => {
-      cartQuantity += item.quantity;
-    });
-
-    document.querySelector(".js-cart-quantity").innerHTML = cartQuantity;
-
-    let addedOpacity = document.querySelector(`.js-added-${productId}`);
-
-    if (timeouts[productId]) {
-      clearTimeout(timeouts[productId]);
-    }
-
-    addedOpacity.classList.add("active");
-    addedOpacity.style.opacity = 1;
-
-    timeouts[productId] = setTimeout(() => {
-      addedOpacity.style.opacity = 0;
-      addedOpacity.classList.remove("active");
-      delete timeouts[productId];
-    }, 2000);
-  });
-})
+    addToCart(selector, productId);
+    updateCartQuantity();
+    updateOpacity(productId);
+  })}
+)

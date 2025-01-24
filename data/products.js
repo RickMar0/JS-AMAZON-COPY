@@ -662,10 +662,10 @@ export const products = [
     image: "images/products/umbrella.jpg",
     name: "Portable Umbrella (Dark Green)",
     rating: {
-      stars: 3,
-      count: 343
+      stars: 3.5,
+      count: 95
     },
-    priceCents: 1170,
+    priceCents: 3200,
     keywords: [
       "umbrella",
       "portable",
