@@ -676,7 +676,7 @@ const products = [
   {
     id: "id2",
     image: "images/products/backpack.jpg",
-    name: "",
+    name: "Premium Black Backpack - 20L - Lightweight",
     rating: {
       stars: 5,
       count: 1
