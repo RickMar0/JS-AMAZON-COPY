@@ -692,7 +692,7 @@ export const products = [
   {
     id: "id14",
     image: "images/products/Grumman-F14B-Tomcat.jpg",
-    name: "Grumman F-14B Tomcat Fighter Jet with Phoenix Missiles and Bombs, servicing included",
+    name: "Grumman F-14B Tomcat",
     rating: {
       stars: 5,
       count: 2

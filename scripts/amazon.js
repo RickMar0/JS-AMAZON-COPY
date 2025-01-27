@@ -70,8 +70,8 @@ document.querySelector(".js-products-grid").innerHTML = productsHTML;
 
 const timeouts = {};
 
-function updateCartQuantity () {
-  let cartQuantity = 0;
+ export function updateCartQuantity() {
+   let cartQuantity = 0;
 
   cart.forEach((item) => {
     cartQuantity += item.quantity;
@@ -108,3 +108,5 @@ document.querySelectorAll(".js-add-to-cart").forEach((button) => {
     updateOpacity(productId);
   })}
 )
+
+updateCartQuantity();

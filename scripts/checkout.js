@@ -100,12 +100,28 @@ document.querySelectorAll(".js-delete-link").forEach((link) => {
   link.addEventListener("click", () => {
     const productId = link.dataset.productId;
     removeFromCart(productId);
+    checkoutLinkItemCountDisplay();
     const container = document.querySelector(
       `.js-cart-item-container-${productId}`);
     if (container) {
       container.remove();
     } else {
-      console.error(`Container for product ID ${productId} not found.`);
+      alert(`product not found`);
     }
   })
 })
+
+function checkoutLinkItemCountDisplay() {
+  const checkoutLink = document.querySelector(".js-return-to-home-link");
+  let cartQuantity = 0;
+  cart.forEach((item) => cartQuantity += item.quantity);
+  const itemCount = cartQuantity;
+  if (itemCount === 0) {
+    checkoutLink.innerHTML = "0 items"
+  } if (itemCount === 1) {
+    checkoutLink.innerHTML = "1 item"
+  }
+  else {checkoutLink.innerHTML =`${itemCount} items`;} 
+};
+
+checkoutLinkItemCountDisplay()
