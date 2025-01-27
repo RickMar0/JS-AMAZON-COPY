@@ -1,4 +1,4 @@
-export let cart = JSON.parse(localStorage.getItem("cart"));
+let cart = JSON.parse(localStorage.getItem("cart"));
 
 if (!cart) {
   cart = [
@@ -19,14 +19,14 @@ if (!cart) {
       quantity: 1,
     }
   ];
-}
+};
 
 
 function saveToStorage() {
   localStorage.setItem("cart", JSON.stringify(cart));
 }
-
-export function addToCart (selector, productId) {
+//⬇⬇ this function causes a SyntaxError: Unexpected token 'export' and i don't know why but it works in the browser
+function addToCart (selector, productId) {
   let matchingItem;
 
   cart.forEach((item) => {
@@ -46,7 +46,7 @@ export function addToCart (selector, productId) {
   saveToStorage();
 };
 
-export function removeFromCart(productId) {
+function removeFromCart(productId) {
   let newCart = [];
   cart.forEach((cartItem) => {
     if (cartItem.productId !== productId) {
@@ -56,4 +56,8 @@ export function removeFromCart(productId) {
 
   cart = newCart;
   saveToStorage();
-}
+};
+
+export {cart};
+export {addToCart};
+export {removeFromCart};

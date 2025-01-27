@@ -116,12 +116,7 @@ function checkoutLinkItemCountDisplay() {
   let cartQuantity = 0;
   cart.forEach((item) => cartQuantity += item.quantity);
   const itemCount = cartQuantity;
-  if (itemCount === 0) {
-    checkoutLink.innerHTML = "0 items"
-  } if (itemCount === 1) {
-    checkoutLink.innerHTML = "1 item"
-  }
-  else {checkoutLink.innerHTML =`${itemCount} items`;} 
+  checkoutLink.innerHTML = `${itemCount} item${itemCount !== 1 ? 's' : ''}`;
 };
 
 checkoutLinkItemCountDisplay()
