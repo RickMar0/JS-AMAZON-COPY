@@ -1,4 +1,4 @@
-import {cart, addToCart} from '../data/cart.js';
+import {addToCart, calculateCartQuantity} from '../data/cart.js';
 import {products} from '../data/products.js';
 import {formatCurrency} from './utils/money.js';
 
@@ -73,11 +73,14 @@ document.querySelector(".js-products-grid").innerHTML = productsHTML;
 
 //cart handling functions
 export function updateCartQuantity() {
-  let cartQuantity = 0;
-  cart.forEach((item) => {
-    cartQuantity += item.quantity;
-  });
+  let cartQuantity = calculateCartQuantity();
+
   document.querySelector(".js-cart-quantity").innerHTML = cartQuantity;
+
+  const cartOpacity = document.querySelector(".js-cart-quantity");
+  cartQuantity === 0
+    ? cartOpacity.style.opacity = 0
+    : cartOpacity.style.opacity = 1;
 };
 
 // add to cart button
@@ -95,6 +98,7 @@ document.querySelectorAll(".js-add-to-cart").forEach((button) => {
 
 // "added" button animation
 const timeouts = {};
+
 function updateOpacity(productId) {
   let addedOpacity = document.querySelector(`.js-added-${productId}`);
 
@@ -103,10 +107,12 @@ function updateOpacity(productId) {
   }
 
   addedOpacity.classList.add("active");
+
   addedOpacity.style.opacity = 1;
 
   timeouts[productId] = setTimeout(() => {
     addedOpacity.style.opacity = 0;
+
     addedOpacity.classList.remove("active");
     delete timeouts[productId];
   }, 2000);

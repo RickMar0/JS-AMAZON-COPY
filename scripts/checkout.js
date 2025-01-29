@@ -1,6 +1,6 @@
-import {cart, removeFromCart} from "../data/cart.js";
+import {cart, removeFromCart, calculateCartQuantity} from "../data/cart.js";
 import {products} from "../data/products.js";
-import {formatCurrency,} from "./utils/money.js";
+import {formatCurrency} from "./utils/money.js";
 
 let cartSummaryHTML = "";
 
@@ -36,9 +36,11 @@ cart.forEach((item) => {
         <span>
           Quantity: <span class="quantity-label">${item.quantity}</span>
         </span>
-        <span class="update-quantity-link link-primary">
+        <span class="update-quantity-link link-primary js-update-link" data-product-id="${matchingProduct.id}">
           Update
         </span>
+        <inpu class="quantity-input">
+        <span class="save-quantity-link link-primary">Save</span>
         <span class="delete-quantity-link link-primary js-delete-link" data-product-id="${matchingProduct.id}">
           Delete
         </span>
@@ -96,13 +98,18 @@ cart.forEach((item) => {
 
 document.querySelector(".js-order-summary").innerHTML = cartSummaryHTML;
 
+// delete item from cart
 document.querySelectorAll(".js-delete-link").forEach((link) => {
   link.addEventListener("click", () => {
+
     const productId = link.dataset.productId;
+
     removeFromCart(productId);
     checkoutLinkItemCountDisplay();
+
     const container = document.querySelector(
       `.js-cart-item-container-${productId}`);
+
     if (container) {
       container.remove();
     } else {
@@ -111,12 +118,24 @@ document.querySelectorAll(".js-delete-link").forEach((link) => {
   })
 })
 
+// update and display cart quantity in checkout link
 function checkoutLinkItemCountDisplay() {
-  const checkoutLink = document.querySelector(".js-return-to-home-link");
-  let cartQuantity = 0;
-  cart.forEach((item) => cartQuantity += item.quantity);
+
+  let cartQuantity = calculateCartQuantity();
+
   const itemCount = cartQuantity;
+
+  const checkoutLink = document.querySelector(".js-return-to-home-link");
+
   checkoutLink.innerHTML = `${itemCount} item${itemCount !== 1 ? 's' : ''}`;
 };
 
-checkoutLinkItemCountDisplay()
+document.querySelectorAll(".js-update-link").forEach((link) => {
+  link.addEventListener("click", () => {
+    const productId = link.dataset.productId;
+
+    console.log(`product = ${productId}`);
+  });
+});
+
+checkoutLinkItemCountDisplay();

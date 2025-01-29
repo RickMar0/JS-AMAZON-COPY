@@ -58,6 +58,17 @@ function removeFromCart(productId) {
   saveToStorage();
 };
 
+function calculateCartQuantity() {
+  let cartQuantity = 0;
+
+  cart.forEach((item) => {
+    cartQuantity += item.quantity;
+  });
+
+  return cartQuantity;
+}
+
 export {cart};
 export {addToCart};
 export {removeFromCart};
+export {calculateCartQuantity};

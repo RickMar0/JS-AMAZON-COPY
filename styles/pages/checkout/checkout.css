@@ -117,6 +117,7 @@
 
 .product-quantity .link-primary {
   margin-left: 3px;
+
 }
 
 @media (max-width: 1000px) {
@@ -208,4 +209,17 @@
 
   margin-top: 11px;
   margin-bottom: 15px;
+}
+
+.quantity-input {
+  display: inline;
+  width: 30px;
+  border: 2px solid rgb(222, 222, 222);
+  border-radius: 5px;
+  padding: 3px;
+  text-align: center;
+}
+
+.save-quantity-link {
+  margin-left: 5px;
 }
