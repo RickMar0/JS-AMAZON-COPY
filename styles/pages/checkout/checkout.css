@@ -218,8 +218,17 @@
   border-radius: 5px;
   padding: 3px;
   text-align: center;
+  cursor: pointer;
 }
 
 .save-quantity-link {
   margin-left: 5px;
+}
+
+.hidden {
+  display: none;
+}
+
+.displayed{
+  display: block;
 }
