@@ -25,7 +25,7 @@ if (!cart) {
 function saveToStorage() {
   localStorage.setItem("cart", JSON.stringify(cart));
 }
-//⬇⬇ this function causes a SyntaxError: Unexpected token 'export' and i don't know why but it works in the browser
+
 function addToCart (selector, productId) {
   let matchingItem;
 
@@ -68,6 +68,7 @@ function calculateCartQuantity() {
   return cartQuantity;
 }
 
+//⬇⬇ these functions causes a (SyntaxError: Unexpected token 'export') and i don't know why but it works in the browser
 export {cart};
 export {addToCart};
 export {removeFromCart};

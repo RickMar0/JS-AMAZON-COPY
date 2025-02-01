@@ -230,5 +230,5 @@
 }
 
 .displayed{
-  display: block;
+  display: initial;
 }

@@ -34,7 +34,7 @@ cart.forEach((item) => {
       </div>
       <div class="product-quantity">
         <span>
-          Quantity: <span class="quantity-label">${item.quantity}</span>
+          Quantity: <span class="quantity-label js-quantity-label" data-product-id="${matchingProduct.id}">${item.quantity}</span>
         </span>
         <span class="update-quantity-link link-primary js-update-link" data-product-id="${matchingProduct.id}">
           Update
@@ -132,12 +132,60 @@ function checkoutLinkItemCountDisplay() {
   checkoutLink.innerHTML = `${itemCount} item${itemCount !== 1 ? 's' : ''}`;
 };
 
-// update quantity of item in cart
+// define and return the quantity input, save link
+function quantityInputAndSaveLink(productId) {
+
+  const quantityInput = document.querySelector(
+  `.js-quantity-input-${productId}`);
+
+  const saveLink = document.querySelector(
+  `.js-save-link[data-product-id="${productId}"]`);
+
+  return {quantityInput, saveLink};
+};
+
+// update button
 document.querySelectorAll(".js-update-link").forEach((link) => {
   link.addEventListener("click", () => {
     const productId = link.dataset.productId;
 
-    console.log(`product = ${productId}`);
+    const { quantityInput, saveLink} = quantityInputAndSaveLink(productId);
+
+    if (quantityInput.classList.contains("hidden") && saveLink.classList.contains("hidden"))
+      
+      {
+
+       quantityInput.classList.remove("hidden");
+       quantityInput.classList.add("displayed");
+
+       saveLink.classList.remove("hidden");
+       saveLink.classList.add("displayed");
+
+      }
+  });
+});
+
+// save button
+document.querySelectorAll(`.js-save-link`).forEach((link) => {
+  link.addEventListener("click", () => {
+    const productId = link.dataset.productId;
+
+    const { quantityInput, saveLink} = quantityInputAndSaveLink(productId);
+
+    const inputValue = quantityInput.value;
+
+    const item = cart.find(item => item.productId === productId);
+    if (item) {
+      item.quantity = parseInt(inputValue, 10);
+    }
+
+    document.querySelector(`.js-quantity-label[data-product-id="${productId}"]`).innerHTML = String(inputValue);
+
+    checkoutLinkItemCountDisplay();
+
+    // hide the input and save link again
+    quantityInput.classList.add("hidden");
+    saveLink.classList.add("hidden");
   });
 });
 
