@@ -115,9 +115,11 @@
   margin-bottom: 5px;
 }
 
-.product-quantity .link-primary {
+.product-quantity .link-primary :hover {
   margin-left: 3px;
-
+  cursor: pointer;
+  color: #ff7b00;
+  
 }
 
 @media (max-width: 1000px) {
@@ -213,7 +215,7 @@
 
 .quantity-input {
   display: inline;
-  width: 30px;
+  width: 50px;
   border: 2px solid rgb(222, 222, 222);
   border-radius: 5px;
   padding: 3px;

@@ -1,6 +1,9 @@
-import {cart, removeFromCart, calculateCartQuantity} from "../data/cart.js";
+import {cart, removeFromCart, calculateCartQuantity, saveToStorage} from "../data/cart.js";
 import {products} from "../data/products.js";
 import {formatCurrency} from "./utils/money.js";
+/*global document alert*/
+
+console.log(dayjs());
 
 let cartSummaryHTML = "";
 
@@ -39,7 +42,7 @@ cart.forEach((item) => {
         <span class="update-quantity-link link-primary js-update-link" data-product-id="${matchingProduct.id}">
           Update
         </span>
-        <input class="quantity-input js-quantity-input-${matchingProduct.id} hidden" type="number" value="${item.quantity}">
+        <input class="quantity-input js-quantity-input-${matchingProduct.id} hidden" data-product-id="${matchingProduct.id} value="${item.quantity}">
         <span class="save-quantity-link link-primary js-save-link hidden" data-product-id="${matchingProduct.id}">
           Save
         </span>
@@ -165,7 +168,7 @@ document.querySelectorAll(".js-update-link").forEach((link) => {
   });
 });
 
-// save button
+// save the items on save-link click 
 document.querySelectorAll(`.js-save-link`).forEach((link) => {
   link.addEventListener("click", () => {
     const productId = link.dataset.productId;
@@ -181,11 +184,21 @@ document.querySelectorAll(`.js-save-link`).forEach((link) => {
 
     document.querySelector(`.js-quantity-label[data-product-id="${productId}"]`).innerHTML = String(inputValue);
 
+    saveToStorage();
     checkoutLinkItemCountDisplay();
 
     // hide the input and save link again
     quantityInput.classList.add("hidden");
     saveLink.classList.add("hidden");
+  });
+});
+  
+
+document.querySelectorAll('.js-quantity-input').forEach((input) => {
+  input.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') {
+      console.log(input.value);
+    }
   });
 });
 

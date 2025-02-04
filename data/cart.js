@@ -69,7 +69,4 @@ function calculateCartQuantity() {
 }
 
 //⬇⬇ these functions causes a (SyntaxError: Unexpected token 'export') and i don't know why but it works in the browser
-export {cart};
-export {addToCart};
-export {removeFromCart};
-export {calculateCartQuantity};
+export { cart, addToCart, removeFromCart, calculateCartQuantity, saveToStorage };
