@@ -53,10 +53,12 @@ function addToCart (selector, productId) {
 
 function removeFromCart(productId) {
   let newCart = [];
+
   cart.forEach((cartItem) => {
     if (cartItem.productId !== productId) {
       newCart.push(cartItem);
     }
+
   });
 
   cart = newCart;
