@@ -3,8 +3,9 @@ import {getProduct} from "../../data/products.js";
 import {formatCurrency} from "../utils/money.js";
 import {deliveryOptions, getDeliveryOption} from "../../data/delivery-options.js";
 import dayjs from "https://unpkg.com/dayjs@1.11.10/esm/index.js";
+import { renderPaymentSummary } from "./paymentSummary.js";
 
-/*global document alert*/
+/*global document*/
 
 export function renderOrderSummary() {
   let cartSummaryHTML = "";
@@ -131,8 +132,8 @@ export function renderOrderSummary() {
 
       if (container) {
         container.remove();
-      } else {
-        alert(`product not found`);
+
+        renderPaymentSummary();
       }
     })
   })
@@ -200,7 +201,10 @@ export function renderOrderSummary() {
       document.querySelector(`.js-quantity-label[data-product-id="${productId}"]`).innerHTML = String(inputValue);
 
       saveToStorage();
+
       checkoutLinkItemCountDisplay();
+
+      renderPaymentSummary();
 
       // hide the input and save link again
       quantityInput.classList.add("hidden");
@@ -223,6 +227,7 @@ export function renderOrderSummary() {
 
       updateDeliveryOption(productId, deliveryOptionId);
       renderOrderSummary();
+      renderPaymentSummary();
     });
   })
 

@@ -32,7 +32,7 @@ export function renderPaymentSummary() {
     </div>
 
     <div class="payment-summary-row">
-      <div class="js-item-quantity-summary">Items (${calculateCartQuantity()}):</div>
+      <div class="js-item-quantity-summary">Items (0):</div>
       <div class="payment-summary-money">
         $${formatCurrency(productPriceCents)}</div>
       </div>
@@ -70,7 +70,10 @@ export function renderPaymentSummary() {
     </button>
   `;
 
-  document.querySelector(".js-payment-summary").innerHTML = paymentSummaryHTML;
+    document.querySelector(".js-payment-summary").innerHTML = paymentSummaryHTML;
+
+  document.querySelector(".js-item-quantity-summary").innerHTML = `Items (${calculateCartQuantity()}):`;
+
   
 };
 
