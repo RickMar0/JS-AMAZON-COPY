@@ -80,9 +80,11 @@ export function updateCartQuantity() {
   document.querySelector(".js-cart-quantity").innerHTML = cartQuantity;
 
   const cartOpacity = document.querySelector(".js-cart-quantity");
-  cartQuantity === 0
-    ? cartOpacity.style.opacity = 0
-    : cartOpacity.style.opacity = 1;
+  if (cartQuantity === 0) {
+    cartOpacity.style.opacity = 0;
+  } else {
+    cartOpacity.style.opacity = 1;
+  }
 };
 
 // add to cart button

@@ -70,10 +70,8 @@ export function renderPaymentSummary() {
     </button>
   `;
 
-    document.querySelector(".js-payment-summary").innerHTML = paymentSummaryHTML;
+    document.querySelector(".js-payment-summary").innerHTML = paymentSummaryHTML;  
 
-  document.querySelector(".js-item-quantity-summary").innerHTML = `Items (${calculateCartQuantity()}):`;
-
-  
+    document.querySelector(".js-item-quantity-summary").innerHTML = `Items (${calculateCartQuantity()}):`;
 };
 
