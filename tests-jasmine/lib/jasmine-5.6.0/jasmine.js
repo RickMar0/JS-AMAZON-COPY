@@ -1,3 +1,8 @@
+/* eslint-disable no-useless-escape */
+/* eslint-disable no-empty */
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-prototype-builtins */
+/* eslint-disable no-undef */
 /*
 Copyright (c) 2008-2019 Pivotal Labs
 Copyright (c) 2008-2025 The Jasmine developers
@@ -21,7 +26,7 @@ LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-// eslint-disable-next-line no-unused-vars,no-var
+// eslint-disable no-unused-vars,no-var,no-useless-escape
 var getJasmineRequireObj = (function(jasmineGlobal) {
   let jasmineRequire;
 
@@ -3349,7 +3354,6 @@ getJasmineRequireObj().DelayedFunctionScheduler = function(j$) {
         // not recommended. We don't do that ourselves, but user code might.
         // This allows such code to work when the mock clock is installed.
         f = function() {
-          // eslint-disable-next-line no-eval
           return eval(funcToCall);
         };
       } else {

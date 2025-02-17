@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-undef */
 /*
 Copyright (c) 2008-2019 Pivotal Labs
 Copyright (c) 2008-2025 The Jasmine developers
@@ -21,7 +23,6 @@ LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-// eslint-disable-next-line no-var
 var jasmineRequire = window.jasmineRequire || require('./jasmine.js');
 
 jasmineRequire.html = function(j$) {
