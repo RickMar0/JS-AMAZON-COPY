@@ -1,31 +1,22 @@
-import {cart, removeFromCart,updateDeliveryOption} from "../../data/cart.js";
+import {cart, removeFromCart,saveToStorage,updateDeliveryOption} from "../../data/cart.js";
 import {getProduct} from "../../data/products.js";
 import {formatCurrency} from "../utils/money.js";
-import {deliveryOptions, getDeliveryOption} from "../../data/delivery-options.js";
-import dayjs from "https://unpkg.com/dayjs@1.11.10/esm/index.js";
+import {deliveryOptions, getDeliveryOption, calculateDeliveryDate} from "../../data/delivery-options.js";
 import { renderPaymentSummary } from "./paymentSummary.js";
 import {checkoutLinkItemCountDisplay} from "./checkoutHeader.js";
 
+
+// ⬇⬇ making Eslint ignore the document object, otherwise it will throw an error
 /*global document*/
 
 export function renderOrderSummary() {
   let cartSummaryHTML = "";
-
   cart.forEach((cartItem) => {
     const productId = cartItem.productId;
-
     const matchingProduct = getProduct(productId);
-
     const deliveryOptionId = cartItem.deliveryOptionId;
-
     const deliveryOption = getDeliveryOption(deliveryOptionId);
-
-    const today = dayjs();
-
-    const deliveryDate = today.add(
-    deliveryOption.deliveryDays, "days");
-
-    const dateString = deliveryDate.format("dddd, MMMM D");
+    const {dateString} = calculateDeliveryDate(deliveryOption);
     
     cartSummaryHTML += `
     <div class="cart-item-container 
@@ -80,21 +71,13 @@ export function renderOrderSummary() {
 
   // delivery options
   function deliveryOptionsHTML(matchingProduct, cartItem) {
-
     let html = "";
-
     deliveryOptions.forEach((deliveryOption) => {
-      const today = dayjs();
-
-      const deliveryDate = today.add(
-      deliveryOption.deliveryDays, "days");
-
-      const dateString = deliveryDate.format("dddd, MMMM D");
-
+      const {dateString} = calculateDeliveryDate(deliveryOption);
+      
       const priceString = deliveryOption.priceCents === 0 
-      ? "FREE Shipping" 
+      ? "FREE" 
       : `$${formatCurrency(deliveryOption.priceCents)} -`;
-
       const isChecked = deliveryOption.id === cartItem.deliveryOptionId;
 
       html += `
@@ -112,7 +95,7 @@ export function renderOrderSummary() {
             ${dateString}
           </div>
           <div class="delivery-option-price">
-            ${priceString} - Shipping
+            ${priceString} Shipping
           </div>
         </div>
       </div>
@@ -128,18 +111,12 @@ export function renderOrderSummary() {
   // delete item from cart
   document.querySelectorAll(".js-delete-link").forEach((link) => {
     link.addEventListener("click", () => {
-
       const productId = link.dataset.productId;
-
       removeFromCart(productId);
-
       const container = document.querySelector(
         `.js-cart-item-container-${productId}`);
-
         container.remove();
-
         checkoutLinkItemCountDisplay();
-
         renderPaymentSummary();
       }
     );
@@ -148,36 +125,32 @@ export function renderOrderSummary() {
   // update link click
   document.querySelectorAll(".js-update-link").forEach((element) => {
     element.addEventListener("click", () => {
-      //defining productId
       const productId = element.dataset.productId;
+      toggleVisibility(productId, true);
 
-      //defining the various elements
-      const inputFielf = document.querySelector(`.js-quantity-input-${productId}`);
-
-      const saveLink = document.querySelector(`.js-save-link[data-product-id="${productId}"]`);
-
-      const updateLink = document.querySelector(`.js-update-link-${productId}`);
-
-      const deleteLink = document.querySelector(`.js-delete-link-${productId}`);
-
-
-      //display input and save link
-      inputFielf.classList.remove("hidden");
-
-      saveLink.classList.remove("hidden");
-
-      //hide the update link and delete link
-      updateLink.classList.add("hidden");
-
-      deleteLink.classList.add("hidden");
-
-    })
+    });
   });
 
+  // save link click
+  document.querySelectorAll(".js-save-link").forEach((element) => {
+    element.addEventListener("click", () => {
+      const productId = element.dataset.productId;
+      const inputField = document.querySelector(`.js-quantity-input-${productId}`);
+      const newValue = inputField.value;
+      const cartItem = cart.find(item => item.productId === productId);
+      cartItem.quantity = parseInt(newValue, 10);
+      document.querySelector(`.js-quantity-label[data-product-id="${productId}"]`).textContent = newValue;
+      saveToStorage(cart);
+      checkoutLinkItemCountDisplay();
+      renderPaymentSummary();
+      toggleVisibility(productId, false);
+    });
+  });
+
+  // delivery option click
   document.querySelectorAll(".js-delivery-option").forEach((element) => {
     element.addEventListener("click", () => {
       const {productId, deliveryOptionId} = element.dataset;
-
       updateDeliveryOption(productId, deliveryOptionId);
       renderOrderSummary();
       renderPaymentSummary();
@@ -185,4 +158,25 @@ export function renderOrderSummary() {
     });
   });
 
+}
+
+
+function toggleVisibility(productId, showInputAndSave) {
+  const inputField = document.querySelector(`.js-quantity-input-${productId}`);
+  const saveLink = document.querySelector(`.js-save-link[data-product-id="${productId}"]`);
+  const updateLink = document.querySelector(`.js-update-link-${productId}`);
+  const deleteLink = document.querySelector(`.js-delete-link-${productId}`);
+
+  if (showInputAndSave) {
+    inputField.classList.remove("hidden");
+    saveLink.classList.remove("hidden");
+    updateLink.classList.add("hidden");
+    deleteLink.classList.add("hidden");
+
+  } else {
+    inputField.classList.add("hidden");
+    saveLink.classList.add("hidden");
+    updateLink.classList.remove("hidden");
+    deleteLink.classList.remove("hidden");
   }
+}

@@ -10,6 +10,8 @@ function checkoutLinkItemCountDisplay() {
   const checkoutLink = document.querySelector(".js-return-to-home-link");
 
   checkoutLink.innerHTML = `${itemCount} item${itemCount !== 1 ? 's' : ''}`;
+
+  return {itemCount};
 };
 
 export {checkoutLinkItemCountDisplay};

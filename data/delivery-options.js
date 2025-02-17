@@ -1,3 +1,6 @@
+import dayjs from "https://unpkg.com/dayjs@1.11.10/esm/index.js";
+
+// defining the delivery options and its properties
 export const deliveryOptions = [
   //
   {
@@ -19,6 +22,8 @@ export const deliveryOptions = [
   },
 ];
 
+
+//retrieve and return the delivery option
 export function getDeliveryOption(deliveryOptionId) {
   let deliveryOption;
     
@@ -29,4 +34,22 @@ export function getDeliveryOption(deliveryOptionId) {
   });
 
   return deliveryOption || deliveryOptions[0];
+}
+
+
+//calculate the delivery date
+export function calculateDeliveryDate(deliveryOption) {
+  const today = dayjs();
+  const deliveryDate = {
+    date : today.add(deliveryOption.deliveryDays, "days"),
+    dayOfWeek : "dddd"
+  };
+
+  if (deliveryDate.date.format(deliveryDate.dayOfWeek) === "Saturday"
+  || deliveryDate.date.format(deliveryDate.dayOfWeek) === "Sunday" ) {
+    deliveryDate.date.add(2, "days").format("dddd, MMMM D")
+  };
+
+  const dateString = deliveryDate.date.format("dddd, MMMM D");
+  return {today, deliveryDate, dateString};
 }
