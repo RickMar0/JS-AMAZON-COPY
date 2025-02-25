@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import { formatCurrency } from "../scripts/utils/money.js";
 
 console.log("⚠ test suite: formatCurrency ⚠");
