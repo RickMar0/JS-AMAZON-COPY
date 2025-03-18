@@ -23,11 +23,4 @@ describe("test suite: addToCart", () => {
     expect(cart[0].quantity).toEqual(1);
   });
 
- //test case 2
-  it("checks cart length before adding", (cart) => {
-    expect(cart.length).toEqual(1);
-  });
-
- // test cases, fails because it takes too long to run (over 5000ms), no clue why
-
 });

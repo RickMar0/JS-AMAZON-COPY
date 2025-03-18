@@ -105,3 +105,4 @@ businessCart.localStorageKey = "cart-business-oop";
 
 cart.loadFromStorage();
 console.log(localStorage);
+console.log(cart.cartItems); 
