@@ -1,6 +1,6 @@
 import { formatCurrency } from "../scripts/utils/money.js";
 
-export function getProduct(productId) {
+function getProduct(productId) {
   let matchingProduct;
 
   products.forEach((product)=> {
@@ -56,6 +56,57 @@ class Clothing extends Product {
   };
 }
 
+class Appliances extends Product {
+  instructionsLink;
+  warrantyLink;
+
+  constructor(productDetails) {
+    super(productDetails);
+    this.instructionsLink = "images/appliance-instructions.png";
+    this.warrantyLink = "images/appliance-warranty.png";
+  }
+
+  extraInfoHTML() {
+    return `
+    <a href="${this.instructionsLink}" target="_blank">
+      Instructions
+    </a>
+    <a href="${this.warrantyLink}" target="_blank">
+      Warranty
+    </a>
+    `;
+  };
+}
+
+let products = [];
+
+function loadProducts(fun) {
+  const xhr = new XMLHttpRequest();
+
+  xhr.addEventListener("load", () => {
+    products = JSON.parse(xhr.response).map((productDetails)=>{
+
+      if(productDetails.type === "clothing") {
+        return new Clothing(productDetails);
+      };
+    
+      if(productDetails.keywords.find(str => str === "appliances")) {
+        return new Appliances(productDetails);
+      }
+    
+      return new Product(productDetails);
+    });
+
+    console.log("load products");
+
+    fun();
+  });
+
+  xhr.open("GET", "https://supersimplebackend.dev/products");
+  xhr.send();
+}
+
+/*
 export const products = [
   {
     id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
@@ -780,8 +831,18 @@ export const products = [
     ]
   }
 ].map((productDetails)=>{
+
   if(productDetails.type === "clothing") {
     return new Clothing(productDetails);
   };
+
+  if(productDetails.keywords.find(str => str === "appliances")) {
+    return new Appliances(productDetails
+    );
+  }
+
   return new Product(productDetails);
 });
+*/
+
+export {products, getProduct, loadProducts, Product, Clothing, Appliances};

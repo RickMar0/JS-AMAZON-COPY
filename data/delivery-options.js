@@ -1,4 +1,5 @@
-import dayjs from "https://unpkg.com/dayjs@1.11.10/esm/index.js";
+import dayjs from "https://cdn.jsdelivr.net/npm/dayjs@2.0.0-alpha.2/dist/index.mjs";
+
 
 // defining the delivery options and its properties
 export const deliveryOptions = [
