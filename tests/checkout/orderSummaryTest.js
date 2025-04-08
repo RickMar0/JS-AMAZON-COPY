@@ -11,11 +11,11 @@ describe("test suite: renderOrderSummary", () => {
     });
   });
   
-  const productId1 = "id14";
-  const productId2 = "idGoose";
-  const productId3 = "idShirt";
-  const productId4 = "idMicrowave";
-  
+  const productId1 = "e43638ce-6aa0-4b85-b27f-e1d07eb678c6";
+  const productId2 = "15b6fc6f-327a-4ec4-896f-486349e85a3d";
+  const productId3 = "83d4ca15-0f35-48f5-b7a3-1ea210004f2e";
+  const productId4 = "54e0eccd-8f36-462b-b68a-8182611d9add";
+
   beforeEach(() => {
     spyOn(localStorage, "setItem");
     document.querySelector(".js-test-container").innerHTML = `
@@ -78,7 +78,7 @@ describe("test suite: renderOrderSummary", () => {
 
     expect(
       document.querySelectorAll(".js-cart-item-container").length
-    ).toEqual(1);
+    ).toEqual(3);
 
     expect(
       document.querySelector(`.js-cart-item-container-${productId1}`)
@@ -88,7 +88,7 @@ describe("test suite: renderOrderSummary", () => {
       document.querySelector(`.js-cart-item-container-${productId2}`)
     ).not.toEqual(null);
 
-    expect(cart.length).toEqual(1);
+    expect(cart.length).toEqual(3);
     expect(cart[0].productId).toEqual(productId2);
 
     document.querySelector(".js-test-container").innerHTML = ``;

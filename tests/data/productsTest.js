@@ -17,7 +17,7 @@ describe("test suite for products", () => {
 console.log(Clothing);
 console.log(Appliances);
 console.log(products);
-console.log(products[0].getPrice());
+console.log(products[0]);
 
   it("class should have properties", () => {
     const product1 = new Appliances({
