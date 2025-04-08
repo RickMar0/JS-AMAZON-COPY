@@ -3,17 +3,21 @@
 /* eslint-disable no-constant-binary-expression */
 /* eslint-disable no-undef */
 
+import {Product, products, Clothing, Appliances, loadProducts} from "../../data/products.js";
 
-import {Product, products, Clothing, Appliances} from "../../data/products.js";
+describe("test suite for products", () => {
+  
+  beforeAll((done) => {
+    loadProducts(()=>{
+      done();
+    });
+  });
 
-console.log(Product);
+  console.log(Product);
 console.log(Clothing);
 console.log(Appliances);
 console.log(products);
-console.log(products[0]);
 console.log(products[0].getPrice());
-
-describe("test suite for products", () => {
 
   it("class should have properties", () => {
     const product1 = new Appliances({

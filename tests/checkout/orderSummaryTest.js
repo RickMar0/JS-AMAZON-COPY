@@ -1,10 +1,20 @@
 /* eslint-disable no-undef */
 import { renderOrderSummary } from "../../scripts/checkout/orderSummary.js";
 import { loadFromStorage, cart } from "../../data/cart.js";
+import { loadProducts } from "../../data/products.js";
 
 describe("test suite: renderOrderSummary", () => {
+  
+  beforeAll((done) => {
+    loadProducts(()=>{
+      done();
+    });
+  });
+  
   const productId1 = "id14";
   const productId2 = "idGoose";
+  const productId3 = "idShirt";
+  const productId4 = "idMicrowave";
   
   beforeEach(() => {
     spyOn(localStorage, "setItem");
@@ -21,7 +31,15 @@ describe("test suite: renderOrderSummary", () => {
         {productId: productId2,
           quantity: 1,
           deliveryOptionId: '3',
-        }
+        },
+        {productId: productId3,
+          quantity: 1,
+          deliveryOptionId: '2',
+        },
+        {productId: productId4,
+          quantity: 1,
+          deliveryOptionId: '1',
+        },
       ]);
     });
 
@@ -32,7 +50,7 @@ describe("test suite: renderOrderSummary", () => {
   it("displays the cart", () => {
     expect(
       document.querySelectorAll(".js-cart-item-container").length
-    ).toEqual(2);
+    ).toEqual(4);
 
     expect(
       document.querySelector(`.js-product-quantity-${productId1}`).innerText

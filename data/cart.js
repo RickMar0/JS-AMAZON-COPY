@@ -84,4 +84,17 @@ function calculateCartQuantity() {
   return cartQuantity;
 };
 
-export { cart, addToCart, removeFromCart, saveToStorage, updateDeliveryOption, calculateCartQuantity, loadFromStorage };
+function loadCart(fun) {
+  const xhr = new XMLHttpRequest();
+
+  xhr.addEventListener("load", () => {
+    console.log(xhr.response);
+    console.log("load products");
+    fun();
+  });
+
+  xhr.open("GET", "https://supersimplebackend.dev/cart");
+  xhr.send();
+}
+
+export { cart, addToCart, removeFromCart, saveToStorage, updateDeliveryOption, calculateCartQuantity, loadFromStorage, loadCart };
