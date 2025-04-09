@@ -8,6 +8,27 @@ import {loadCart} from "../data/cart.js";
 //import "../data/backend-practice.js";
 //import "../data/cart-class.js";
 
+async function loadPage(){
+
+  await loadProductsFetch()
+  
+  await new Promise((resolve) =>{
+    loadCart(()=>{
+      resolve();
+    });
+  });
+
+  checkoutLinkItemCountDisplay(); 
+  renderOrderSummary();
+  renderPaymentSummary();
+}
+
+loadPage();
+
+// below are different ways to load the products
+
+// promise all// <------------------------------
+/* 
 Promise.all([
   loadProductsFetch(),
 
@@ -22,7 +43,9 @@ Promise.all([
   renderOrderSummary();
   renderPaymentSummary();
 });
+*/
 
+// promise chaining <-----------------------------
 /*
 new Promise((resolve)=>{
   loadProductsFetch(()=>{
@@ -44,6 +67,8 @@ new Promise((resolve)=>{
   renderPaymentSummary();
 })
 */
+
+// xmlhttp request <------------------------------
 /*
 loadProducts(()=>{
   loadCart(() =>{
