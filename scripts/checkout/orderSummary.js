@@ -17,6 +17,11 @@ export function renderOrderSummary() {
     const deliveryOptionId = cartItem.deliveryOptionId;
     const deliveryOption = getDeliveryOption(deliveryOptionId);
     const {dateString} = calculateDeliveryDate(deliveryOption);
+    // Check if matchingProduct is undefined
+    if (!matchingProduct) {
+      console.error(`Product with ID ${productId} not found.`);
+      return; // Skip this cart item
+    }
     
     cartSummaryHTML += `
     <div class="cart-item-container 
