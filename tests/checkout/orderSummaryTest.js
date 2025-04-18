@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
 import { renderOrderSummary } from "../../scripts/checkout/orderSummary.js";
 import { loadFromStorage, cart } from "../../data/cart.js";
@@ -5,10 +6,8 @@ import { loadProducts, loadProductsFetch } from "../../data/products.js";
 
 describe("test suite: renderOrderSummary", () => {
   
-  beforeAll((done) => {
-    loadProductsFetch().then(()=>{
-      done();
-    });
+  beforeAll(async () => {
+    await loadProductsFetch();
   });
   
   const productId1 = "e43638ce-6aa0-4b85-b27f-e1d07eb678c6";

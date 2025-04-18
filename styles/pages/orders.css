@@ -85,7 +85,7 @@
   }
 }
 
-.order-details-grid {
+[class^=order-details-grid] {
   padding: 40px 25px;
   border: 1px solid rgb(213, 217, 217);
   border-top: none;

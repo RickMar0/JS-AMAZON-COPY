@@ -1,13 +1,10 @@
+/*global document*/
 import {cart, removeFromCart,saveToStorage,updateDeliveryOption} from "../../data/cart.js";
 import {getProduct} from "../../data/products.js";
 import {formatCurrency} from "../utils/money.js";
 import {deliveryOptions, getDeliveryOption, calculateDeliveryDate} from "../../data/delivery-options.js";
 import { renderPaymentSummary } from "./paymentSummary.js";
 import {checkoutLinkItemCountDisplay} from "./checkoutHeader.js";
-
-
-// ⬇⬇ making Eslint ignore the document object, otherwise it will throw an error
-/*global document*/
 
 export function renderOrderSummary() {
   let cartSummaryHTML = "";
@@ -17,10 +14,9 @@ export function renderOrderSummary() {
     const deliveryOptionId = cartItem.deliveryOptionId;
     const deliveryOption = getDeliveryOption(deliveryOptionId);
     const {dateString} = calculateDeliveryDate(deliveryOption);
-    // Check if matchingProduct is undefined
     if (!matchingProduct) {
       console.error(`Product with ID ${productId} not found.`);
-      return; // Skip this cart item
+      return;
     }
     
     cartSummaryHTML += `

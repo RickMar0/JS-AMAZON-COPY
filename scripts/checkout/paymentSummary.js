@@ -1,9 +1,11 @@
+/* eslint-disable no-undef*/
 /*global document */
+import dayjs from "https://cdn.jsdelivr.net/npm/dayjs@2.0.0-alpha.2/dist/index.mjs";
 import {cart, calculateCartQuantity} from "../../data/cart.js";
 import { getProduct } from "../../data/products.js";
 import { getDeliveryOption } from "../../data/delivery-options.js";
 import { formatCurrency } from "../utils/money.js";
-import { addOrder } from "../../data/orders.js";
+import { addOrder, saveOrderToStorage } from "../../data/orders.js";
 
 export function renderPaymentSummary() {
 
@@ -87,14 +89,18 @@ export function renderPaymentSummary() {
         const order = await response.json()
         console.log(order);
         addOrder(order);
+        saveOrderToStorage(order);
+        const orderDay = dayjs().format("MMMM D");
+        localStorage.setItem("orderDay", orderDay);
       } catch (error) {
         console.log("unexpected error, please try again later");
         console.log(error);
       }
 
       window.location.href = "orders.html";
+
+      
     })
 
     document.querySelector(".js-item-quantity-summary").innerHTML = `Items (${calculateCartQuantity()}):`;
 };
-

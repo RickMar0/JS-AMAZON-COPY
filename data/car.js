@@ -1,3 +1,5 @@
+
+/*
 class Car{
   #brand;
   #model;
@@ -157,3 +159,4 @@ car3.openTrunk();
 console.log(" ");
 
 console.log(car1, car2, car3);
+*/

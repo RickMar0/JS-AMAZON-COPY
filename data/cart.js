@@ -97,4 +97,20 @@ function loadCart(fun) {
   xhr.send();
 }
 
-export { cart, addToCart, removeFromCart, saveToStorage, updateDeliveryOption, calculateCartQuantity, loadFromStorage, loadCart };
+async function loadCartFetch(fun) {
+  try{
+    const response = await fetch("https://supersimplebackend.dev/cart");
+
+    const data = await response.text();
+
+    console.log(data);
+
+    fun();
+
+  } catch(error) {
+    console.error("load cart fetch error", error)
+  }
+
+}
+
+export { cart, addToCart, removeFromCart, saveToStorage, updateDeliveryOption, calculateCartQuantity, loadFromStorage, loadCart, loadCartFetch };

@@ -80,7 +80,7 @@ class Appliances extends Product {
 
 let products = [];
 
-function loadProductsFetch(){
+function loadProductsFetch(fun){
   const promise = fetch("https://supersimplebackend.dev/products")
 
   .then((response)=>{return response.json()})
@@ -100,13 +100,15 @@ function loadProductsFetch(){
         return new Product(productDetails);
       });
 
-      console.log("products loaded", products);
+      fun();
+
+      console.log("products loaded");
     }
   )
   
   .catch((error)=>{
-    console.log("unexpected error. please try again later.");
-    console.log(error);
+    console.error("unexpected error. please try again later.");
+    console.error(error);
   });
   return promise;
 }
@@ -117,6 +119,7 @@ function loadProductsFetch(){
 });
 */
 
+/*
 function loadProducts(fun) {
   const xhr = new XMLHttpRequest();
 
@@ -145,6 +148,7 @@ function loadProducts(fun) {
   xhr.open("GET", "https://supersimplebackend.dev/products");
   xhr.send();
 }
+*/
 
 /*
 export const products = [
@@ -885,4 +889,4 @@ export const products = [
 });
 */
 
-export {products, getProduct, loadProducts, loadProductsFetch, Product, Clothing, Appliances};
+export {products, getProduct, loadProductsFetch, Product, Clothing, Appliances};

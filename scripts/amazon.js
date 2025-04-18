@@ -1,11 +1,10 @@
-import {addToCart, calculateCartQuantity} from '../data/cart.js';
-import {products, loadProducts} from '../data/products.js';
-
 /* global document*/
+import {addToCart, calculateCartQuantity} from '../data/cart.js';
+import {products,loadProductsFetch} from '../data/products.js';
 
-loadProducts(renderProductsGrid);
+loadProductsFetch(renderProductsGrid);
 
-function renderProductsGrid(){
+export function renderProductsGrid(){
 
   let productsHTML = '';
   products.forEach((product) => {

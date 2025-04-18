@@ -2,11 +2,12 @@ const orders = JSON.parse(localStorage.getItem("orders")) || [];
 
 function addOrder(order) {
   orders.unshift(order);
-  saveToStorage();
+  saveOrderToStorage();
 }
 
-function saveToStorage() {
+function saveOrderToStorage() {
   localStorage.setItem("orders", JSON.stringify(orders));
 }
 
-export { orders, addOrder };
+
+export { orders, addOrder, saveOrderToStorage };
