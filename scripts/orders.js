@@ -6,11 +6,11 @@ import {cart,calculateCartQuantity} from "../data/cart.js";
 import { loadProductsFetch , products} from "../data/products.js";
 import { formatCurrency } from "./utils/money.js";
 
-console.log(orders);
-console.log(cart);
+// console.log(orders);
+// console.log(cart);
 
 //display the number of items in the cart upon page load
-function updateCartQuantity() {
+export function updateCartQuantity() {
   let cartQuantity = calculateCartQuantity();
   document.querySelector(".cart-quantity").innerHTML = cartQuantity;
 } updateCartQuantity();
@@ -26,12 +26,12 @@ async function renderOrdersGridHTML(){
   await loadProductsFetch(()=>{});
 
   //testing products
-  console.log(products);
+  //console.log(products);
 
   //test code
-  orders.forEach((order) => {
-    console.log(order.id);
-  })
+  // orders.forEach((order) => {
+  //   console.log(order.id);
+  // })
 
   
 
@@ -86,6 +86,9 @@ async function renderOrdersGridHTML(){
         //increasing the button id
         String(buttonId++);
 
+        //setting an identifier for the item
+        const identifier = String(classCounter) + String(buttonId);
+
         // selecting the order details element
         const orderDetails = document.querySelector(`.order-details-grid${classCounter}`);
 
@@ -95,38 +98,36 @@ async function renderOrdersGridHTML(){
           return currentItem;
         }
 
-        // getting the product details
-        const itemName = getProductDetails(item.productId).name;
-        const itemImage = getProductDetails(item.productId).image;
-        const itemQuantity = item.quantity;
-        const deliveryDate = dayjs(item.estimatedDeliveryTime).format("MMMM D");
-
-        // creating an object to hold the item details
+        // getting the product details and storing them in an object
         const itemDetails = {
-          name: itemName,
-          image: itemImage,
-          quantity: itemQuantity,
-          deliveryDate: deliveryDate
+          itemName : getProductDetails(item.productId).name,
+          itemImage : getProductDetails(item.productId).image,
+          itemQuantity : item.quantity,
+          deliveryDate : dayjs(item.estimatedDeliveryTime).format("MMMM D"),
+          deliveryDate2 : dayjs(item.estimatedDeliveryTime).format("dddd, MMMM D")
         }
+
+        // storing the item details in local storage
+        localStorage.setItem(`tracking-item-${identifier}`, JSON.stringify(itemDetails));
 
 
 
 
         orderDetails.innerHTML += `
           <div class="product-image-container">
-            <img src="${itemImage}" class="product-image">
+            <img src="${itemDetails.itemImage}" class="product-image">
           </div>
 
           <div class="product-details">
 
             <div class="product-name">
-              ${itemName}
+              ${itemDetails.itemName}
             </div>
             <div class="product-delivery-date">
-              Arriving on: ${deliveryDate}
+              Arriving on: ${itemDetails.deliveryDate}
             </div>
             <div class="product-quantity">
-              ${itemQuantity}
+              ${itemDetails.itemQuantity}
             </div>
             <button class="buy-again-button button-primary">
               <img class="buy-again-icon" src="images/icons/buy-again.png">
@@ -137,11 +138,8 @@ async function renderOrdersGridHTML(){
           <div class="product-actions">
             <a href="./tracking.html">
               <button class="track-package-button button-secondary"
-                data-name="${itemDetails.name}"
-                data-image="${itemDetails.image}"
-                data-quantity="${itemDetails.quantity}"
-                data-delivery-date="${itemDetails.deliveryDate}"
-                data-btn-id="${buttonId}">
+                onclick="localStorage.setItem('tracking-key',${identifier});
+                console.log(localStorage.getItem('tracking-key'));">
                 Track package
               </button>
             </a>

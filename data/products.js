@@ -102,7 +102,7 @@ function loadProductsFetch(fun){
 
       fun();
 
-      console.log("products loaded");
+      //console.log("products loaded");
     }
   )
   
