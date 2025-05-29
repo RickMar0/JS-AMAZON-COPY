@@ -1,10 +1,9 @@
 /* eslint-disable no-unused-vars */
 /* global document localStorage*/
 import dayjs from "https://cdn.jsdelivr.net/npm/dayjs@2.0.0-alpha.2/dist/index.mjs";
-import { orders, saveOrderToStorage } from "../data/orders.js";
-import {cart, loadFromStorage, calculateCartQuantity, loadCartFetch} from "../data/cart.js";
+import { orders} from "../data/orders.js";
+import {cart,calculateCartQuantity} from "../data/cart.js";
 import { loadProductsFetch , products} from "../data/products.js";
-import {deliveryOptions, getDeliveryOption, calculateDeliveryDate} from "../data/delivery-options.js";
 import { formatCurrency } from "./utils/money.js";
 
 console.log(orders);
@@ -77,9 +76,15 @@ async function renderOrdersGridHTML(){
       </div>
       
       <div class="order-details-grid${classCounter}">`
+
+      //creating the id for buttons
+      let buttonId = 0;
     
-      // looping through the order items and creating the HTML for each
+      //looping through the order items and creating the HTML for each
       orderItems.forEach((item)=>{
+
+        //increasing the button id
+        String(buttonId++);
 
         // selecting the order details element
         const orderDetails = document.querySelector(`.order-details-grid${classCounter}`);
@@ -95,6 +100,15 @@ async function renderOrdersGridHTML(){
         const itemImage = getProductDetails(item.productId).image;
         const itemQuantity = item.quantity;
         const deliveryDate = dayjs(item.estimatedDeliveryTime).format("MMMM D");
+
+        // creating an object to hold the item details
+        const itemDetails = {
+          name: itemName,
+          image: itemImage,
+          quantity: itemQuantity,
+          deliveryDate: deliveryDate
+        }
+
 
 
 
@@ -122,7 +136,12 @@ async function renderOrdersGridHTML(){
 
           <div class="product-actions">
             <a href="./tracking.html">
-              <button class="track-package-button button-secondary">
+              <button class="track-package-button button-secondary"
+                data-name="${itemDetails.name}"
+                data-image="${itemDetails.image}"
+                data-quantity="${itemDetails.quantity}"
+                data-delivery-date="${itemDetails.deliveryDate}"
+                data-btn-id="${buttonId}">
                 Track package
               </button>
             </a>
